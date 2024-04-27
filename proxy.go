@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"net"
+	"os"
 	"strings"
 )
 
@@ -10,6 +12,9 @@ func StartProxy(connPool *ConnPool, addr string) {
 	n := "unix"
 	if strings.Contains(addr, ":") {
 		n = "tcp"
+	} else {
+		// remove addr file
+		os.Remove(addr)
 	}
 
 	l, err := net.Listen(n, addr)
@@ -34,12 +39,12 @@ func StartProxy(connPool *ConnPool, addr string) {
 // 数据交换方法
 func HandlerData(connPool *ConnPool, local net.Conn) {
 
-	connPool.log.Debug("remote addr:", local.RemoteAddr())
+	connPool.log.Debug("remote addr:", local.RemoteAddr(), connPool.Stats())
 
 	conn, err := connPool.Get()
 	if err != nil {
 		local.Close()
-		conn.log.Error("pool get error:", err)
+		fmt.Println("get conn error:", err)
 		return
 	}
 

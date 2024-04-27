@@ -26,7 +26,7 @@ func (cn *Redis) Ping() error {
 		return cb.Err
 	}
 	if strings.ToUpper(string(cb.Byte)) != "+PONG\r\n" {
-		return fmt.Errorf("error ping")
+		return fmt.Errorf("error ping - bytes:%s  len:%d", string(cb.Byte), len(cb.Byte))
 	}
 	return nil
 }
@@ -95,7 +95,7 @@ func (cn *Redis) SwapData(local net.Conn) bool {
 				}
 				break
 			}
-			fmt.Println(string(line))
+			//fmt.Println(string(line))
 			err = cn.conn.Write(line)
 			if err != nil {
 				forceClose = true

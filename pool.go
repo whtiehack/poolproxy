@@ -136,9 +136,13 @@ func (p *ConnPool) Get() (*Conn, error) {
 		// 命中计数
 		atomic.AddInt32(&p.stats.Hits, 1)
 		// 连接可用 直接返回
-		if conn.IsActive(p.opt.RIdleTimeout) && conn.Ping() == nil {
-			atomic.AddInt32(&p.stats.UseConns, 1)
-			return conn, nil
+		if conn.IsActive(p.opt.RIdleTimeout) {
+			err := conn.Ping()
+			if err == nil {
+				atomic.AddInt32(&p.stats.UseConns, 1)
+				return conn, nil
+			}
+			p.log.Warn("ping error:", conn.RemoteAddr(), "  err:", err)
 		}
 		p.log.Warn(errConnActive)
 		// 超出最大空闲时间，或链接错误

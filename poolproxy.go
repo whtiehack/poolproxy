@@ -33,13 +33,13 @@ func main() {
 
 		connPool = NewConnPool(opt, commonLog)
 		go StartProxy(connPool, opt.Addr)
-		fmt.Println(opt.Addr, connPool)
+		//fmt.Println(opt.Addr, connPool)
 	}
 
 	go func() {
 		http.ListenAndServe("127.0.0.1:8090", nil)
 	}()
-
+	fmt.Println("start success ", config.Options["redis"].Addr)
 	// connPool.Close()
 	InitSignal()
 
