@@ -38,8 +38,9 @@ func StartProxy(connPool *ConnPool, addr string) {
 
 // 数据交换方法
 func HandlerData(connPool *ConnPool, local net.Conn) {
-
-	connPool.log.Debug("remote addr:", local.RemoteAddr(), connPool.Stats())
+	//if connPool.stats.Requests%10000 == 0 {
+	connPool.log.Debug("remote addr:", local.RemoteAddr(), "useConn:", connPool.stats.UseConns, " free:", connPool.stats.FreeConns, connPool.stats.Requests, connPool.stats.Hits)
+	//}
 
 	conn, err := connPool.Get()
 	if err != nil {

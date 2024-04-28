@@ -256,7 +256,7 @@ func (p *ConnPool) CheckActiveConns() {
 		}
 		p.lock.Unlock()
 
-		p.log.Debug(p.opt.Addr, p.Stats())
+		p.log.Debug("CheckActiveConns", p.opt.Addr, p.Stats())
 	}
 
 }

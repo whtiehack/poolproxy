@@ -11,13 +11,13 @@ logfile = ""
     addr = "/tmp/redis.sock" # 代理监听地址
     read_timeout = 0  # 未生效
     write_timeout = 0 # 未生效
-    pool_timeout = 30 # 指定从连接池获取连接的超时时间. 默认是5秒.
+    pool_timeout = 20 # 指定从连接池获取连接的超时时间. 默认是5秒.
 
     #远程连接设置
     raddr = "192.168.1.10:6379" # 远程redis地址
     ruser = ""
     rpass = ""  # 远程redis密码
-    rpool_size = 20 # redis连接池大小
+    rpool_size = 50 # redis连接池大小
     ridle_timeout = 0 # 最大空闲时间 秒 默认是2分钟 120  空闲时间超过2分钟会断掉重连
     ridle_check_frequency = 0
 
@@ -28,12 +28,12 @@ logfile = ""
 #    addr = ":8081"
 #    read_timeout = 0
 #    write_timeout = 0
-#    pool_timeout = 0
+#    pool_timeout = 50
 #
 #    #远程连接设置
 #    raddr = "192.168.56.102:6379"
 #    ruser = ""
 #    rpass = ""
-#    rpool_size = 0
+#    rpool_size = 100
 #    ridle_timeout = 0
 #    ridle_check_frequency = 0
